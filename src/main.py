@@ -73,7 +73,8 @@ async def main():
             groups = proxy_config.get('apifyProxyGroups', ['RESIDENTIAL'])
             proxy_conf = await Actor.create_proxy_configuration()
             if proxy_conf:
-                proxy_url = await proxy_conf.new_url(session_id=f"hotpads_{city}")
+                session_id = f"hotpads_{city}".replace('-', '_')
+                proxy_url = await proxy_conf.new_url(session_id=session_id)
         
         await Actor.log.info(f'Starting HotPads scraper: city={city}, max_results={max_results}')
         
