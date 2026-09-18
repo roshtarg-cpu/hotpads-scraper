@@ -34,12 +34,12 @@ async def _fetch(url, proxy_url=None):
             html = await page.content()
             
             if len(html) < 500:
-                await Actor.log.warning(f'Low content size: {len(html)} bytes')
+                Actor.log.warning(f'Low content size: {len(html)} bytes')
                 return None
                 
             return html
         except Exception as e:
-            await Actor.log.error(f'Fetch error for {url}: {e}')
+            Actor.log.error(f'Fetch error for {url}: {e}')
             return None
         finally:
             await page.close()
@@ -76,7 +76,7 @@ async def main():
                 session_id = f"hotpads_{city}".replace('-', '_')
                 proxy_url = await proxy_conf.new_url(session_id=session_id)
         
-        await Actor.log.info(f'Starting HotPads scraper: city={city}, max_results={max_results}')
+        Actor.log.info(f'Starting HotPads scraper: city={city}, max_results={max_results}')
         
         item_count = 0
         request_count = 0
@@ -85,7 +85,7 @@ async def main():
         try:
             # Build search URL
             url = f'https://www.hotpads.com/search/{city}/rentals'
-            await Actor.log.info(f'Fetching: {url}')
+            Actor.log.info(f'Fetching: {url}')
             
             request_count += 1
             html = await _fetch(url, proxy_url)
@@ -97,14 +97,14 @@ async def main():
             next_data = _extract_next_data(html)
             
             if not next_data:
-                await Actor.log.warning('No __NEXT_DATA__ found, trying HTML parsing')
+                Actor.log.warning('No __NEXT_DATA__ found, trying HTML parsing')
                 error_count += 1
             else:
                 # Extract listings from JSON structure
                 page_props = next_data.get('props', {}).get('pageProps', {})
                 listings = page_props.get('listings', []) or page_props.get('results', []) or []
                 
-                await Actor.log.info(f'Found {len(listings)} listings')
+                Actor.log.info(f'Found {len(listings)} listings')
                 
                 for idx, listing in enumerate(listings[:max_results]):
                     try:
@@ -126,17 +126,17 @@ async def main():
                         item_count += 1
                         
                         if item_count % 10 == 0:
-                            await Actor.log.info(f'Scraped {item_count} listings...')
+                            Actor.log.info(f'Scraped {item_count} listings...')
                             
                     except Exception as e:
-                        await Actor.log.error(f'Error processing listing {idx}: {e}')
+                        Actor.log.error(f'Error processing listing {idx}: {e}')
                         error_count += 1
                         continue
             
-            await Actor.log.info(f'Completed: {item_count} items scraped')
+            Actor.log.info(f'Completed: {item_count} items scraped')
             
         except Exception as e:
-            await Actor.log.error(f'Fatal error: {e}')
+            Actor.log.error(f'Fatal error: {e}')
             error_count += 1
         
         # Save task context (MANDATORY)
