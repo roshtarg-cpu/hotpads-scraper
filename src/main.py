@@ -49,12 +49,27 @@ def _extract_next_data(html):
     if not html:
         return None
     
-    match = re.search(r'<script id="__NEXT_DATA__"[^>]*>(.*?)</script>', html, re.DOTALL)
-    if match:
-        try:
-            return json.loads(match.group(1))
-        except json.JSONDecodeError as e:
-            Actor.log.warning(f'Failed to parse __NEXT_DATA__: {e}')
+    # Try multiple patterns for __NEXT_DATA__
+    patterns = [
+        r'<script id="__NEXT_DATA__"[^>]*>(.*?)</script>',
+        r'<script id="__NEXT_DATA__"[^>]*type="application/json">(.*?)</script>',
+        r'window.__NEXT_DATA__\s*=\s*({.*?});',
+    ]
+    
+    for pattern in patterns:
+        match = re.search(pattern, html, re.DOTALL)
+        if match:
+            try:
+                return json.loads(match.group(1))
+            except json.JSONDecodeError as e:
+                Actor.log.warning(f'Failed to parse JSON with pattern {pattern}: {e}')
+                continue
+    
+    # Log sample of HTML for debugging
+    Actor.log.warning(f'No __NEXT_DATA__ found. HTML size: {len(html)} bytes')
+    if len(html) < 10000:
+        Actor.log.warning(f'HTML sample: {html[:1000]}')
+    
     return None
 
 async def main():
