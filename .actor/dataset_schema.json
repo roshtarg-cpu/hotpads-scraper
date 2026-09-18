@@ -34,7 +34,7 @@
       "type": "string",
       "title": "Image URL"
     },
-    "description": {
+    "propertyDescription": {
       "type": "string",
       "title": "Property Description"
     },

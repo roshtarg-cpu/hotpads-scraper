@@ -115,7 +115,7 @@ async def main():
                             'sqft': listing.get('sqft'),
                             'propertyType': listing.get('propertyType'),
                             'imageUrl': listing.get('photo', {}).get('url') if isinstance(listing.get('photo'), dict) else listing.get('photo'),
-                            'description': listing.get('description'),
+                            'propertyDescription': listing.get('description'),
                             'scrapedAt': datetime.utcnow().isoformat() + 'Z'
                         }
                         
