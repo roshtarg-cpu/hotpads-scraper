@@ -1,0 +1,93 @@
+{
+  "$schema": "https://apify.com/schemas/v1/dataset.ide.json",
+  "actorSpecification": 1,
+  "fields": {
+    "url": {
+      "type": "string",
+      "title": "Listing URL",
+      "description": "Full URL to the rental listing on HotPads"
+    },
+    "address": {
+      "type": "string",
+      "title": "Address",
+      "description": "Full property address"
+    },
+    "price": {
+      "type": "number",
+      "title": "Monthly Rent",
+      "description": "Monthly rental price in USD"
+    },
+    "bedrooms": {
+      "type": "number",
+      "title": "Bedrooms",
+      "description": "Number of bedrooms"
+    },
+    "bathrooms": {
+      "type": "number",
+      "title": "Bathrooms",
+      "description": "Number of bathrooms"
+    },
+    "sqft": {
+      "type": "number",
+      "title": "Square Feet",
+      "description": "Property size in square feet"
+    },
+    "propertyType": {
+      "type": "string",
+      "title": "Property Type",
+      "description": "Type of property (apartment, house, condo, etc.)"
+    },
+    "imageUrl": {
+      "type": "string",
+      "title": "Image URL",
+      "description": "URL to the main property image"
+    },
+    "description": {
+      "type": "string",
+      "title": "Description",
+      "description": "Property description text"
+    },
+    "scrapedAt": {
+      "type": "string",
+      "title": "Scraped At",
+      "description": "Timestamp when the listing was scraped"
+    }
+  },
+  "views": {
+    "overview": {
+      "title": "Overview",
+      "transformation": {
+        "fields": ["address", "price", "bedrooms", "bathrooms", "sqft", "url"]
+      },
+      "display": {
+        "component": "table",
+        "properties": {
+          "address": {
+            "label": "Address",
+            "format": "text"
+          },
+          "price": {
+            "label": "Price",
+            "format": "number"
+          },
+          "bedrooms": {
+            "label": "Beds",
+            "format": "number"
+          },
+          "bathrooms": {
+            "label": "Baths",
+            "format": "number"
+          },
+          "sqft": {
+            "label": "Sqft",
+            "format": "number"
+          },
+          "url": {
+            "label": "URL",
+            "format": "link"
+          }
+        }
+      }
+    }
+  }
+}

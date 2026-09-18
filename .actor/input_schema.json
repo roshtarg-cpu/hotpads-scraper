@@ -1,0 +1,36 @@
+{
+  "$schema": "https://apify.com/schemas/v1/input.ide.json",
+  "title": "HotPads Scraper Input",
+  "type": "object",
+  "schemaVersion": 1,
+  "properties": {
+    "city": {
+      "type": "string",
+      "title": "City",
+      "description": "City slug (e.g., 'new-york-ny', 'los-angeles-ca', 'chicago-il')",
+      "default": "new-york-ny",
+      "prefill": "new-york-ny",
+      "editor": "textfield"
+    },
+    "maxResults": {
+      "type": "integer",
+      "title": "Max Results",
+      "description": "Maximum number of rental listings to scrape",
+      "default": 50,
+      "prefill": 3,
+      "minimum": 1,
+      "maximum": 500
+    },
+    "proxyConfiguration": {
+      "type": "object",
+      "title": "Proxy Configuration",
+      "description": "Apify proxy settings (RESIDENTIAL recommended for PerimeterX bypass)",
+      "prefill": {
+        "useApifyProxy": true,
+        "apifyProxyGroups": ["RESIDENTIAL"]
+      },
+      "editor": "proxy"
+    }
+  },
+  "required": ["maxResults"]
+}

@@ -1,0 +1,14 @@
+{
+  "$schema": "https://apify.com/schemas/v1/actor.ide.json",
+  "actorSpecification": 1,
+  "name": "hotpads-scraper",
+  "title": "HotPads Scraper — Rental Listings Extractor",
+  "description": "Extract rental listings from HotPads.com - addresses, prices, bedrooms, bathrooms, square footage. Works with Claude, ChatGPT, AI agents via Apify MCP.",
+  "version": "1.0",
+  "inputSchema": "./input_schema.json",
+  "outputSchema": "./output_schema.json",
+  "storages": {
+    "dataset": "./dataset_schema.json"
+  },
+  "dockerfile": "./Dockerfile"
+}
